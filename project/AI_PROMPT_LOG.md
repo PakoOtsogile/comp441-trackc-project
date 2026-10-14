@@ -5,6 +5,7 @@ This log is an evidence template. It records the assistance used in this work an
 | Date | Tool/model | Prompt or task | Output used | Human verification |
 |---|---|---|---|---|
 | 14 Oct 2026 | OpenAI Codex (model shown in task UI) | “help me complete this group project”; then requested a new public GitHub repository and working code/tests | Candidate research, repository modifications, regression tests, and draft project documentation | Focused 66-test run passed; group should review code, approve scope, and complete missing human evidence |
+| 14 Oct 2026 | OpenAI Codex (model shown in task UI) | “complete the remaining work” | Seeded mutation sample and survivor triage; reproducible concurrent helper micro-load script and report; corrected coverage summary and regression rerun | 66 focused Django tests, 3 pytest-bdd scenarios, and 2-second runner smoke check passed; group review and HTTP/usability evidence remain outstanding |
 
 ## AI-only baseline comparison
 

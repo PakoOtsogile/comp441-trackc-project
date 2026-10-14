@@ -1,0 +1,14 @@
+{
+  "scope": "in-process get_ar_end_time helper; not HTTP or database load",
+  "users": 20,
+  "requested_seconds": 120,
+  "elapsed_seconds": 120.005,
+  "calls": 1539240,
+  "throughput_calls_per_second": 12826.47,
+  "latency_ms_median": 1.4764,
+  "latency_ms_p95": 2.7411,
+  "errors": 0,
+  "error_types": {},
+  "python": "3.12.14",
+  "platform": "Windows-11-10.0.26100-SP0"
+}

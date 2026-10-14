@@ -19,11 +19,13 @@ The evaluated scope is appointment scheduling and time validation. It is not a p
 - [BDD feature](project/BDD/appointment-time.feature) and [pytest-bdd step tests](appointment/tests/bdd/test_appointment_time.py)
 - [Metrics and evidence register](project/METRICS.md)
 - [Defect prediction protocol](project/DEFECT_PREDICTION.md)
+- [Mutation sample analysis](project/MUTATION_ANALYSIS.md)
+- [Performance check](project/PERFORMANCE.md)
 - [AI assistance disclosure](project/AI_PROMPT_LOG.md)
 
 ## Verified local status
 
-On 14 October 2026, 66 focused tests passed; 3 real pytest-bdd Gherkin scenarios passed; 5 selected integration tests passed in a separate 8-test run; and the CI-style Django suite passed all 580 discovered tests with one environment-conditional skip. The full run used ten workers, shuffle seed 948697336, Django-Q enabled, and a project-local temporary directory. Coverage was 59% across `appointment/models.py` and `appointment/utils/date_time.py` for the 66-test focused run only (54% and 76%, respectively); it is not the whole-repository or AI-only coverage result required by the brief.
+On 14 October 2026, 66 focused tests passed; 3 real pytest-bdd Gherkin scenarios passed; 5 selected integration tests passed in a separate 8-test run; and the CI-style Django suite passed all 580 discovered tests with one environment-conditional skip. The full run used ten workers, shuffle seed 948697336, Django-Q enabled, and a project-local temporary directory. Coverage.py reported 59% combined coverage (64% statements, 37% branches) across `appointment/models.py` and `appointment/utils/date_time.py` for the 66-test focused run only (model 60%/18%, date/time utility 79%/70%); this is not the whole-repository or AI-only coverage result required by the brief.
 
 ## Group completion items
 

@@ -44,7 +44,7 @@ flowchart LR
 
 See [`TDD_LOG.md`](TDD_LOG.md) for red/green evidence. The focused run on 14 October 2026 passed 66 tests in 33.234 seconds under coverage instrumentation. Three actual pytest-bdd Gherkin scenarios passed in 0.41 seconds. A separate run of three Django scenario counterparts and five integration tests passed 8 tests in 79.008 seconds. Python syntax compilation and `git diff --check` also completed without reported errors.
 
-The upstream workflow runs a broader Python/Django matrix. The local full suite passed under the current Python/Django combination. Focused coverage and a scoped Pylint/Radon baseline are now recorded in [`METRICS.md`](METRICS.md) and [`STATIC_ANALYSIS.md`](STATIC_ANALYSIS.md). AI-only versus hybrid mutation scores and the eight v1 survivor case studies remain pending; the mutation tool did not install reliably in this Windows session. Symbolic path reasoning is documented, but a tool execution is not claimed.
+The upstream workflow runs a broader Python/Django matrix. The local full suite passed under the current Python/Django combination. Focused coverage and a scoped Pylint/Radon baseline are now recorded in [`METRICS.md`](METRICS.md) and [`STATIC_ANALYSIS.md`](STATIC_ANALYSIS.md). A seeded Mutatest sample on the date/time utility detected 19 of 23 mutants (82.6%) across eight of 46 candidate AST locations; four survivors are triaged in [`MUTATION_ANALYSIS.md`](MUTATION_ANALYSIS.md). This is not the required AI-only v1/hybrid v2 comparison, and it does not satisfy the eight v1 survivor case studies. Symbolic path reasoning is documented, but a tool execution is not claimed.
 
 ## 5. Behavior-driven and integration evidence
 
@@ -58,7 +58,7 @@ The proposed model uses change churn features and human-reviewed historical defe
 
 ## 7. Performance and usability
 
-**Pending group execution.** The required 20–50 simulated concurrent-user load check and Nielsen heuristic review have not been performed. The group must record the endpoint, machine/runtime/database configuration, dataset, warm-up/repetitions, response time, throughput, errors, and top three usability issues with severity. Follow course approval/consent requirements and use synthetic appointment data. No performance or human-usability results are claimed here.
+An in-process helper micro-load was completed with 20 worker threads over 120 seconds: 1,539,240 `get_ar_end_time` calls, 12,826.47 calls/second, 1.4764 ms median, 2.7411 ms p95, and zero exceptions. Runtime and limitations are in [`PERFORMANCE.md`](PERFORMANCE.md), with raw output in [`performance_run.json`](performance_run.json). This does not measure an HTTP endpoint or database. The group still needs a representative endpoint load test if required, and the Nielsen heuristic review remains pending. Record top usability issues and severity only after a real group review; follow course approval/consent requirements and use synthetic appointment data.
 
 ## 8. CI and quality gates
 
