@@ -110,6 +110,11 @@ class AppointmentRequestAttributeValidation(BaseTest):
                 self.service1, self.staff_member1, date_=timezone.localdate(), start_time=time(10, 0), end_time=time(10, 0)
             )
 
+    def test_saving_request_with_end_before_start_raises_validation_error(self):
+        """Direct model saves should report reversed times as a validation error."""
+        with self.assertRaises(ValidationError):
+            self.create_appt_request_for_sm1(start_time=time(11, 0), end_time=time(9, 0))
+
     def test_appointment_duration_less_than_one_minute(self):
         """Test that an appointment request can have a duration less than a minute."""
         service = self.create_service_(name="Sub-minute Service", duration=timedelta(seconds=30))

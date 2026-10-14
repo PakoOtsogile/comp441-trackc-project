@@ -265,6 +265,18 @@ class GetAppointmentRequestEndTimeTests(TestCase):
         with self.assertRaises(ValueError):
             get_ar_end_time("10:00:00", -60)
 
+    def test_negative_timedelta_duration(self):
+        """Negative timedeltas should be rejected just like negative minute values."""
+        with self.assertRaises(ValueError):
+            get_ar_end_time(datetime.time(10, 0), datetime.timedelta(minutes=-30))
+
+    def test_fractional_minute_duration_preserves_seconds(self):
+        """Numeric durations may be fractional minutes and should not be truncated."""
+        self.assertEqual(
+            get_ar_end_time(datetime.time(10, 0), 1.5),
+            datetime.time(10, 1, 30),
+        )
+
     def test_invalid_start_time_format(self):
         """Test invalid start time format"""
         with self.assertRaises(ValueError):

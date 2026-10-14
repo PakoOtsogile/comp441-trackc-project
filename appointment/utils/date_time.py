@@ -305,7 +305,12 @@ def get_ar_end_time(start_time, duration) -> datetime.time:
     if not isinstance(duration, (datetime.timedelta, int, float)):
         raise TypeError("duration must be either a datetime.timedelta or a numeric type representing minutes.")
 
-    if isinstance(duration, (int, float)) and duration < 0:
+    if isinstance(duration, datetime.timedelta):
+        duration_minutes = duration.total_seconds() / 60
+    else:
+        duration_minutes = duration
+
+    if duration_minutes < 0:
         raise ValueError("duration cannot be negative.")
 
     # Convert the time object to a datetime object
@@ -313,12 +318,6 @@ def get_ar_end_time(start_time, duration) -> datetime.time:
         start_time = convert_str_to_time(start_time)
 
     dt_start_time = datetime.datetime.combine(datetime.datetime.today(), start_time)
-
-    # Convert duration to minutes if it's a timedelta
-    if isinstance(duration, datetime.timedelta):
-        duration_minutes = duration.total_seconds() / 60
-    else:
-        duration_minutes = int(duration)
 
     # Add the duration
     dt_end_time = dt_start_time + datetime.timedelta(minutes=duration_minutes)

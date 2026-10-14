@@ -480,6 +480,8 @@ class AppointmentRequest(models.Model):
         # if no id_request is provided, generate one
         if not self.id_request:
             self.id_request = f"{get_timestamp()}{self.service.id}{generate_random_id()}"
+        if self.start_time > self.end_time:
+            raise ValidationError(_("Start time must be before end time"))
         # start time should not be equal to end time
         if self.start_time == self.end_time:
             raise ValidationError(_("Start time and end time cannot be the same"))
