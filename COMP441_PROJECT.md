@@ -7,8 +7,10 @@ The evaluated scope is appointment scheduling and time validation. It is not a p
 ## Course project documents
 
 - [Charter and scope](project/CHARTER.md)
+- [Interim final-report draft](project/FINAL_REPORT_DRAFT.md)
 - [Requirements traceability matrix](project/RTM.md)
 - [TDD evidence log](project/TDD_LOG.md)
+- [Peer-evaluation template](project/PEER_EVALUATION_TEMPLATE.md)
 - [Integration test evidence](project/INTEGRATION_TESTS.md)
 - [BDD feature and Django test counterparts](project/BDD/appointment-time.feature)
 - [Metrics and evidence register](project/METRICS.md)
