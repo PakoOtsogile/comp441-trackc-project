@@ -25,4 +25,4 @@ The failing-before observations below were recorded during this work on 14 Octob
 
 Command: `python manage.py test appointment.tests.models.test_appointment_request appointment.tests.utils.test_validators appointment.tests.utils.test_date_time`  
 Result: **66 tests passed in 61.522 seconds** on 14 October 2026; Django system check reported no issues.  
-Limitation: the complete 574-test upstream suite was started but stopped before completion because of slow execution in this environment. It is not recorded as passing. Run the complete suite in CI before final submission.
+Full-suite follow-up: the first shuffled run hit a Windows sandbox permission error because an image test tried writing under the host-managed system temp directory. The test passed when `TMP`, `TEMP`, and `TMPDIR` pointed to the checkout's ignored `.venv/test-tmp`. The full suite was rerun with project CI settings (`USE_DJANGO_Q=true`, `--parallel=10 --shuffle`), using seed 948697336: **580 tests ran, 579 passed, 1 skipped, 0 failures** in 401.789 seconds. The skipped test is environment-conditional; confirm the exact hosted CI result before final submission.

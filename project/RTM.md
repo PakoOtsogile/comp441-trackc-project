@@ -17,10 +17,10 @@ This initial matrix derives expected behaviors from the checked-out source, test
 | R-11 | Staff may retrieve only appointments authorized for their account. | appointment services/views | `appointment/tests/test_services.py::FetchUserAppointmentsTests.test_fetch_appointments_for_staff_member` |
 | R-12 | Unauthorized users cannot retrieve protected appointment data. | appointment services/views | `appointment/tests/test_services.py::PrepareAppointmentDisplayDataTests.test_unauthorized_user` |
 | R-13 | Valid appointment requests are accepted through the HTTP layer. | appointment views | `appointment/tests/test_views.py::AppointmentRequestTestCase.test_appointment_request_submit_valid` |
-| R-14 | The complete upstream test suite remains a CI quality gate. | `.github/workflows/tests.yml` | CI matrix runs `manage.py test appointment.tests` |
+| R-14 | The upstream regression suite and Gherkin acceptance scenarios run in CI. | `.github/workflows/tests.yml` | CI matrix runs `manage.py test appointment.tests` and `python -m pytest appointment/tests/bdd -q` |
 
 ## Evidence gaps to close
 
-- Review the scenario counterparts and Gherkin wording together; this repository uses Django's test runner rather than a Gherkin parser.
+- Review the pytest-bdd scenarios and Gherkin wording together; the hosted CI run has not yet been confirmed.
 - Confirm that the five HTTP/database integration examples in `INTEGRATION_TESTS.md` satisfy the coordinator's definition of integration test.
-- Add source locations and evidence links in the final report after the fork is published.
+- Verify the group-agreed source citations and evidence links in the final report.

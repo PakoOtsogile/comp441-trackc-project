@@ -3,7 +3,7 @@
 **Status:** working draft for group review  
 **Prepared:** 14 October 2026  
 **Candidate:** [`adamspd/django-appointment`](https://github.com/adamspd/django-appointment)  
-**Course project fork:** `TOM-1841/comp441-trackc-project` (planned public repository)
+**Course project repository:** [PakoOtsogile/comp441-trackc-project](https://github.com/PakoOtsogile/comp441-trackc-project) (public)
 
 ## Purpose and approval
 
@@ -47,21 +47,26 @@ Replace every TBD with the group’s real names and agreed assignments. Do not i
 | Candidate qualification | License, size, history, scope, coordinator decision recorded | Technical checks recorded; coordinator decision pending |
 | TDD changes | Three defects have failing-before/fixed-after evidence | 3 regressions implemented; focused suite passes |
 | Requirements traceability | At least 10 requirements map to code and verification | Draft in `RTM.md` |
-| BDD scenarios | At least 3 executable Given/When/Then scenarios | Pending implementation and group review |
-| Integration tests | At least 5 tests identified and executed | Existing candidates mapped in `RTM.md`; group to confirm rubric fit |
-| Quality metrics | Baseline and final values, tools, dates, caveats | Pending measurements |
+| BDD scenarios | At least 3 Gherkin scenarios run with pytest-bdd in CI | Implemented; local run: 3 passed; hosted run and coordinator/group review pending |
+| Integration tests | At least 5 tests identified and executed | 5 named Django integration tests passed in the recorded 8-test run; confirm rubric fit |
+| Quality metrics | Baseline and final values, tools, dates, caveats | Focused coverage and static-analysis baseline measured; mutation and other required metrics pending |
 | Final report and presentation | Rubric sections, evidence, references, AI disclosure | Pending group/coordinator inputs |
+
+## One-page test plan summary
+
+See [`TEST_PLAN.md`](TEST_PLAN.md) for scope, objectives, approach, roles to be assigned, schedule, entry/exit criteria, rated risks, and three-point estimates. Role owners are intentionally left for the group to confirm.
 
 ## Risks
 
-| Risk | Response |
-|---|---|
-| Coordinator rejects upstream candidate | Obtain approval before expanding scope; retain a short-list backup |
-| Upstream behaviors differ from assumptions | Use existing tests and source as the oracle; record observed behavior |
-| Full test suite is slow on the available Windows host | Run focused tests locally; use the repository CI matrix for complete runs |
-| Metrics are mistaken for clinical validation | State the scheduling-only scope in every report/demo |
-| Human evaluation lacks consent or consistent procedure | Prepare protocol first; collect no identifiable health data |
-| Team/member contribution details are unknown | Keep names/assignments pending until the group supplies them |
+| Risk | Probability | Impact | Response |
+|---|---|---|---|
+| Coordinator rejects candidate/scope | Medium | High | Request written approval; retain selection evidence and adjust only with coordinator direction. |
+| Project scope is interpreted as clinical data validation | Medium | High | State appointment-scheduling boundaries; get approval that this clinic/appointment candidate meets Track C. |
+| Upstream behavior differs from assumptions | Medium | Medium | Use source/tests as oracle and record observed behavior. |
+| Full suite exceeds local time/resources | Medium | Medium | Use focused local runs and hosted CI matrix for full verification. |
+| Metrics are mistaken for clinical validation | Low | High | State scheduling-only scope in every report/demo; use synthetic data only. |
+| Human evaluation lacks consent or consistent procedure | Medium | High | Obtain course approval, use consent and synthetic data, and collect no identifiable health data. |
+| Group/member contribution records are incomplete | Medium | High | Assign owners and keep checkpoint records; do not infer contributions. |
 
 ## Schedule (proposed; confirm against course calendar)
 

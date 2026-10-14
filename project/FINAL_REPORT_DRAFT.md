@@ -4,9 +4,9 @@
 
 ## 1. Executive summary
 
-The group selected `adamspd/django-appointment`, a Python/Django appointment scheduling application. This project focuses on temporal validation around appointment requests and duration conversion. Three test-driven fixes were implemented: reversed request intervals now raise a model validation error; negative `timedelta` durations are rejected; and fractional numeric durations preserve seconds. The focused regression run passed 66 tests, and a separate run of three scenario tests and five selected integration tests passed 8 tests. The complete upstream suite has not yet been verified in this environment.
+The group selected `adamspd/django-appointment`, a Python/Django appointment scheduling application. This project focuses on temporal validation around appointment requests and duration conversion. Three test-driven fixes were implemented: reversed request intervals now raise a model validation error; negative `timedelta` durations are rejected; and fractional numeric durations preserve seconds. The focused regression run passed 66 tests, a separate run of three scenario tests and five selected integration tests passed 8 tests, and the CI-style suite passed 580 tests with 1 skip.
 
-The candidate technical checks recorded here are an Apache-2.0 license, 5,961 Python source lines under the selected package directories (excluding tests/migrations), and 830 commits at the checkout point. Course coordinator approval remains pending. The candidate handles appointments and scheduling; it is not a patient-records or medication-validation system.
+The candidate technical checks recorded here are an Apache-2.0 license, 5,961 Python source lines under the selected package directories (excluding tests/migrations), and 830 upstream commits at the import point (832 total commits including two course commits). Course coordinator approval remains pending. The candidate handles appointments and scheduling; it is not a patient-records or medication-validation system.
 
 ## 2. Project background and candidate qualification
 
@@ -28,29 +28,41 @@ The traceability matrix is in [`RTM.md`](RTM.md). Requirements include valid sta
 
 The changes are intentionally narrow: validation stays in the appointment model; duration normalization and arithmetic stay in the existing date/time utility. No schema migration was required. Detailed design/architecture figure: **TBD — add a diagram based on verified source modules and data flow.**
 
+Verified request path: a POST to `appointment_request_submit` is validated by `AppointmentRequestForm`; a valid form saves an `AppointmentRequest`, whose model save checks date/time ordering and duration before writing to the database. Separately, availability services call `get_ar_end_time` to calculate candidate end times.
+
+```mermaid
+flowchart LR
+    Browser[Appointment form] --> View[appointment_request_submit]
+    View --> Form[AppointmentRequestForm validation]
+    Form --> Model[AppointmentRequest.save validation]
+    Model --> DB[(Django database)]
+    Availability[Availability service] --> Time[get_ar_end_time]
+    Time --> Availability
+```
+
 ## 4. Test-driven development and verification
 
-See [`TDD_LOG.md`](TDD_LOG.md) for red/green evidence. The focused run on 14 October 2026 passed 66 tests in 61.522 seconds. A separate run of three Django tests corresponding to the Gherkin feature and five integration tests passed 8 tests in 79.008 seconds. Python syntax compilation and `git diff --check` also completed without reported errors.
+See [`TDD_LOG.md`](TDD_LOG.md) for red/green evidence. The focused run on 14 October 2026 passed 66 tests in 33.234 seconds under coverage instrumentation. Three actual pytest-bdd Gherkin scenarios passed in 0.41 seconds. A separate run of three Django scenario counterparts and five integration tests passed 8 tests in 79.008 seconds. Python syntax compilation and `git diff --check` also completed without reported errors.
 
-The upstream workflow runs a broader test matrix. The local full suite discovered 574 tests but was stopped before completion due to slow execution. Therefore full-suite status is **unverified**, not passing. Coverage, mutation score, static-analysis findings, and symbolic execution are **TBD**; populate with tool/version, exact run, counts, and relevant output. If the rubric requires at least eight surviving mutants, list and justify each one with source/test references rather than inventing survivors.
+The upstream workflow runs a broader Python/Django matrix. The local full suite passed under the current Python/Django combination. Focused coverage and a scoped Pylint/Radon baseline are now recorded in [`METRICS.md`](METRICS.md) and [`STATIC_ANALYSIS.md`](STATIC_ANALYSIS.md). AI-only versus hybrid mutation scores and the eight v1 survivor case studies remain pending; the mutation tool did not install reliably in this Windows session. Symbolic path reasoning is documented, but a tool execution is not claimed.
 
 ## 5. Behavior-driven and integration evidence
 
-Three appointment-time Gherkin scenarios and executable Django test counterparts are in `BDD/appointment-time.feature` and `appointment/tests/test_trackc_bdd_scenarios.py`. The project uses Django's test runner rather than a Gherkin parser; obtain coordinator confirmation that this format satisfies the rubric, or integrate a BDD runner if required.
+Three appointment-time Gherkin scenarios are in `BDD/appointment-time.feature`, with executable pytest-bdd steps in `appointment/tests/bdd/test_appointment_time.py`. CI runs these acceptance scenarios with pytest-bdd. Django test counterparts remain for the upstream test runner. Group/coordinator review should confirm scenario scope and acceptance-level classification.
 
 Five selected integration cases and their descriptions are listed in [`INTEGRATION_TESTS.md`](INTEGRATION_TESTS.md). All five were included in the 8-test run and passed.
 
 ## 6. Defect prediction and analysis
 
-The proposed model uses change churn features and human-reviewed historical defect labels, with chronological holdout and a majority baseline. The executable script is `scripts/defect_prediction.py`; no reviewed label file or model result exists yet. Do not report performance metrics until label review, evaluation, and version capture are complete. Compare AI findings and static analysis only after recording the same code sample, independent ground truth, adjudication rules, and tool versions in [`AI_PROMPT_LOG.md`](AI_PROMPT_LOG.md).
+The proposed model uses change churn features and human-reviewed historical defect labels, with chronological holdout and a majority baseline. The executable script is `scripts/defect_prediction.py`; no reviewed label file or model result exists yet. A documented risk-based test order is available as an interim prioritization method. Do not report classifier performance until label review, evaluation, and version capture are complete. Compare AI findings and static analysis only after recording the same code sample, independent ground truth, adjudication rules, and tool versions in [`AI_PROMPT_LOG.md`](AI_PROMPT_LOG.md).
 
 ## 7. Performance and usability
 
-**TBD.** Record an agreed endpoint, machine/runtime/database configuration, dataset size, warm-up, repetitions, median/p95 latency and errors. For usability, follow course approval/consent requirements and use synthetic appointment data. Record participant count and anonymized task outcomes. No human-study or performance values have been collected for this draft.
+**Pending group execution.** The required 20–50 simulated concurrent-user load check and Nielsen heuristic review have not been performed. The group must record the endpoint, machine/runtime/database configuration, dataset, warm-up/repetitions, response time, throughput, errors, and top three usability issues with severity. Follow course approval/consent requirements and use synthetic appointment data. No performance or human-usability results are claimed here.
 
 ## 8. CI and quality gates
 
-The existing upstream GitHub Actions workflow installs supported Django/Python combinations and runs `appointment.tests`. Preserve the workflow and confirm the fork’s default branch triggers it. Add any extra required gates (coverage threshold, mutation gate, linter) only after their configurations are fixed and results reproducible. CI evidence for this fork: **TBD after publication and workflow run**.
+The GitHub Actions workflow installs supported Django/Python combinations and runs `appointment.tests`, then runs the pytest-bdd acceptance scenarios. The workflow is present in the public fork; a successful hosted run and an agreed coverage/mutation threshold gate still need verification. The assignment requires the hybrid suite in CI and a gate for both measures; do not claim that until configured and observed passing.
 
 ## 9. Team contributions and reflection
 
@@ -58,7 +70,7 @@ The existing upstream GitHub Actions workflow installs supported Django/Python c
 
 ## 10. Conclusion
 
-Three temporal-validation defects have reproducible regression tests and the focused verification runs passed. The project has a traceable starting point and a measured but limited evidence set. It is not ready to present as a complete final report until coordinator approval, complete CI, rubric-required quality metrics, performance/usability evidence, and authentic group contribution records have been added.
+Three temporal-validation defects have reproducible regression tests and the focused verification runs passed. The project has a public repository, test plan, traceability draft, working Gherkin automation, and a measured but limited evidence set. It is not ready as a final submission until the group completes mutation v1/v2 and survivor analyses, classifier labels/results, exploratory/performance/usability sessions, CI quality gates, coordinator approval, authentic member/contribution records, AI declaration, and final report review.
 
 ## References
 

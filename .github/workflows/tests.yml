@@ -1,8 +1,6 @@
 name: Tests
 on:
   push:
-    branches-ignore:
-      - 'main'
   workflow_dispatch:
   pull_request:
     types: [opened, synchronize, reopened]
@@ -54,6 +52,7 @@ jobs:
         # dependency bumps stay covered, then install the Django for this matrix leg.
         grep -viE '^django==' requirements.txt > /tmp/requirements-no-django.txt
         pip install -r /tmp/requirements-no-django.txt
+        pip install -r requirements-test.txt
         pip install "Django~=${{ matrix.django-version }}.0"
         pip install coverage
         
@@ -74,6 +73,9 @@ jobs:
         USE_DJANGO_Q: 'true'
       run: |
         python manage.py test appointment.tests --parallel=10 --shuffle --verbosity=2
+
+    - name: Run Gherkin acceptance scenarios
+      run: python -m pytest appointment/tests/bdd -q
         
     - name: Install tblib for better error reporting
       if: failure()
